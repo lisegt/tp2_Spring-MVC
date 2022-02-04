@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>Les Villes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+
+<body>
+	<h1>Gestion des villes</h1>
+    <form method="POST">
+        <label for="nom">Nom : <input type="text" name="nomVille" id="nom" />
+        <label for="pop">Population : <input type="number" name="popVille" id="pop" />
+        <label for="pays">Pays : 
+        <select id="pays" name="pays">
+            {{#pays}}
+                <option value={{id}}>
+                    {{name}}
+                </option>
+            {{/pays}}
+            
+        </select>
+        <input type="submit">
+    </form>
+	<table>
+        <tr>
+            <th>Nom</th>
+            <th>Population</th>
+            <th>Pays</th>
+        </tr>
+        {{! On parcourt la liste des villes}}
+        {{#ville}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{population}}</td>
+            <td>{{country.name}}</td>
+        </tr>
+        {{/ville}}
+        
+
+    </table>
+</body>
+
+</html>
