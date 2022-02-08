@@ -28,22 +28,48 @@ public class CityController {
 	@Autowired
 	private CountryRepository daoCountry;
 	
-	@GetMapping(path = "defaultView")
+	@GetMapping(path = "show")
 	public String recupererDonnees(Model model) {
-		model.addAttribute("ville", daoCity.findAll());
-		model.addAttribute("pays", daoCountry.findAll() );
+		model.addAttribute("villes", daoCity.findAll());
+		model.addAttribute("pays", daoCountry.findAll());
+
+		//on initialise les champs du formulaire avec une ville par défaut
+		Country france = daoCountry.getById(1);
+		City cityDefaut = new City("Nouvelle ville", france);
+		cityDefaut.setPopulation(50);
+		model.addAttribute("city", cityDefaut);
+
 		return DEFAULT_VIEW;
 	}
+	@GetMapping(path="edit")
+	public String modifCityPuisMontreListe(@RequestParam("id") City city, Model model){
+		model.addAttribute("city", city);
+		model.addAttribute("pays", daoCountry.findAll());
+		return "formulaireEditCity";
+	}
 
-	@PostMapping(path = "defaultView")
-	public String ajouterVille(@RequestParam String nomVille, @RequestParam int popVille, @RequestParam int pays){
-		Country myCountry = daoCountry.findById(pays).orElseThrow(); //pays est l'id du pays récupéré en value ds form mustache
+	@GetMapping(path="delete")
+	public String supprimeCityPuisMontreListe(@RequestParam("id") City city){
+		daoCity.delete(city);
+		return "redirect:/gestionDesVilles/show";
+	}
+	/*
+	@PostMapping(path = "save")
+	public String ajouterVille(@RequestParam String nomVille, @RequestParam int popVille, @RequestParam int country){
+		Country myCountry = daoCountry.findById(country).orElseThrow(); //pays est l'id du pays récupéré en value ds form mustache
 		City newCity = new City (nomVille, myCountry);
 		newCity.setPopulation(popVille);
 
 		daoCity.save(newCity);
-		return "redirect:defaultView";
+		return "redirect:/gestionDesVilles/show";
+	}
+	*/
 
+	@PostMapping(path = "save")
+	public String enregistrerUneVille(City uneVille){
+		
+		daoCity.save(uneVille);
+		return "redirect:/gestionDesVilles/show";
 	}
 }
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>Les Villes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+
+<body>
+	<h1>Modifier la ville</h1>
+    <form method="POST" action="save"> {{! On revient sur le controleur avec la méthode post d'url save}}
+        <div class="column">
+            <label for="id">ID</label>
+                <input type='text' name='id'
+                    {{#city.id}} value="{{city.id}}" {{/city.id}}
+                    readonly="readonly"
+                    placeholder="Read-only, non modifiable"
+                />
+
+        <label for="nom">Nom de la ville : 
+            <input type="text" name="name" id="nom" {{#city.name}} value="{{city.name}}" {{/city.name}} placeholder="Nom de la ville"/>
+        <label for="pop">Population (en millions): 
+            <input type="number" name="population" id="pop" {{#city.population}} value="{{city.population}}" {{/city.population}} placeholder="Population de la ville" />
+        <label for="pays">Pays : 
+        <select id="pays" name="country">
+            {{#pays}}
+                <option value={{id}}>
+                    {{name}}
+                </option>
+            {{/pays}}
+            
+        </select>
+        <input type="submit" value="Enregistrer" />
+        <input type="reset" value="Réinitialiser" />
+    </form>
+    <hr/>
+    <a href="/gestionDesVilles/show">Retour au menu des villes</a>
+	
+</body>
+
+</html>

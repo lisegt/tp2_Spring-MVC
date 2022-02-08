@@ -9,34 +9,50 @@
 
 <body>
 	<h1>Gestion des villes</h1>
-    <form method="POST">
-        <label for="nom">Nom : <input type="text" name="nomVille" id="nom" />
-        <label for="pop">Population : <input type="number" name="popVille" id="pop" />
-        <label for="pays">Pays : 
-        <select id="pays" name="pays">
-            {{#pays}}
-                <option value={{id}}>
-                    {{name}}
-                </option>
-            {{/pays}}
-            
-        </select>
-        <input type="submit">
+    <form method="POST" action="save"> {{! On revient sur le controleur avec la méthode post d'url save}}
+        <div class="column">
+            <label for="id">ID</label>
+                <input name='id'
+                    {{#city.id}} value="{{city.id}}" {{/city.id}}
+                    placeholder="Read-only, auto-généré"
+                    disabled='disabled'
+                />
+            <label for="pays">Pays : 
+            <select id="pays" name="country">
+                {{#pays}}
+                    <option value={{id}}>
+                        {{name}}
+                    </option>
+                {{/pays}}
+                
+            </select>
+    
+            <label for="nom">Nom de la ville :</label> <input type="text" name="name" id="nom"  value="{{city.name}}"/>
+            <label for="pop">Population (en millions):</label> <input type="number" name="population" id="pop" value="{{city.population}}" />
+  
+            <input type="submit" value="Enregistrer"/>
+        </div>
+
     </form>
+
 	<table>
         <tr>
             <th>Nom</th>
             <th>Population</th>
             <th>Pays</th>
+            <th colspan="2">Actions</th>
         </tr>
         {{! On parcourt la liste des villes}}
-        {{#ville}}
+        {{#villes}}
         <tr>
             <td>{{name}}</td>
             <td>{{population}}</td>
             <td>{{country.name}}</td>
+
+            <td> <a href='edit?id={{id}}'>Modifier</a> </td>
+            <td> <a href='delete?id={{id}}'>Supprimer</a> </td>
         </tr>
-        {{/ville}}
+        {{/villes}}
         
 
     </table>
